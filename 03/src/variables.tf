@@ -30,3 +30,32 @@ variable "vpc_name" {
   default     = "develop"
   description = "VPC network&subnet name"
 }
+
+# Переменная для настройки SSH-пользователя
+variable "ssh_user" {
+  description = "User name for SSH connection on VMs"
+  type        = string
+  default     = "yc-user"
+}
+
+# Используем map(object)
+variable "db_vm_specs" {
+  description = "Configuration specifications for database VMs (main/replica)."
+  type = map(object({
+    cpu           = number
+    ram           = number
+    disk_volume   = number
+  }))
+  default = {
+    "main" = {
+      cpu           = 4
+      ram           = 8 
+      disk_volume   = 30
+    },
+    "replica" = {
+      cpu           = 2
+      ram           = 4
+      disk_volume   = 15
+    }
+  }
+}
